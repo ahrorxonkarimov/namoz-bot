@@ -8,7 +8,7 @@ const app = express();
 const TOKEN = '8353179858:AAFMgCR5KLWOh7-4Tid-A4x1RAwPd3-Y9xE';
 const bot = new Telegraf(TOKEN);
 
-const ADMIN_IDS = [5985723887]; // Adminlar
+const ADMIN_IDS = [7894421569, 5985723887]; // Adminlar
 const CHANNEL = '@Islomxon_masjidi';
 const DOMAIN = 'https://islomxonbot-asosiy.onrender.com';
 
