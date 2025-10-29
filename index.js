@@ -5,7 +5,7 @@ const app = express();
 const bot = new Telegraf('8353179858:AAFMgCR5KLWOh7-4Tid-A4x1RAwPd3-Y9xE');
 
 const ADMIN_ID = 5985723887; // <--- /id dan oling
-const DOMAIN = 'https://namoz-bot.onrender.com';
+cconst DOMAIN = 'https://namoz-bot-gisf.onrender.com'; // <--- gisf QO'SHILDI!
 const CHANNEL = '@Islomxon_masjidi';
 
 // Web App faylini berish
