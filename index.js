@@ -5,7 +5,7 @@ const app = express();
 const bot = new Telegraf('8353179858:AAFMgCR5KLWOh7-4Tid-A4x1RAwPd3-Y9xE');
 
 const ADMIN_ID = 5985723887; // <--- /id dan oling
-const DOMAIN = 'https://namoz-bot.up.railway.app';
+const DOMAIN = 'https://namoz-bot-production.up.railway.app'; // <--- TO'G'RI URL
 const CHANNEL = '@Islomxon_masjidi';
 
 // Web App faylini berish
@@ -13,14 +13,19 @@ app.get('/webapp.html', (req, res) => {
   res.sendFile(__dirname + '/webapp.html');
 });
 
-// Webhook yo'li
+// Bosh sahifa (Cannot GET / ni tuzatish)
+app.get('/', (req, res) => {
+  res.send('<h1>Namoz Bot ishlayapti!</h1><a href="/webapp.html">Web App</a>');
+});
+
+// Webhook
 app.use('/webhook', bot.webhookCallback('/webhook'));
 
 // /start
-bot.command('start', (ctx) => {
+bot.start((ctx) => {
   if (ctx.from.id !== ADMIN_ID) return ctx.reply('Faqat admin.');
 
-  ctx.reply('Namoz vaqtlarini yuborish:', {
+  ctx.reply('Namoz vaqtlari:', {
     reply_markup: {
       inline_keyboard: [[
         { text: 'Web App', web_app: { url: `${DOMAIN}/webapp.html` } }
@@ -31,7 +36,7 @@ bot.command('start', (ctx) => {
 
 // /id
 bot.command('id', (ctx) => {
-  ctx.reply(`Sizning ID: ${ctx.from.id}`);
+  ctx.reply(`ID: ${ctx.from.id}`);
 });
 
 // Web App ma'lumotlari
@@ -60,14 +65,14 @@ https://t.me/Islomxon_masjidi`;
   }
 });
 
-// Webhook o'rnatish (server ishga tushganda)
-app.listen(process.env.PORT || 3000, async () => {
-  const url = `${DOMAIN}/webhook`;
+// Serverni ishga tushirish
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, async () => {
   try {
-    await bot.telegram.setWebhook(url);
-    console.log('Webhook o‘rnatildi:', url);
+    await bot.telegram.setWebhook(`${DOMAIN}/webhook`);
+    console.log(`Webhook o‘rnatildi: ${DOMAIN}/webhook`);
   } catch (err) {
     console.error('Webhook xatosi:', err.message);
   }
-  console.log('Server ishlayapti:', url);
+  console.log(`Server ishlayapti: ${DOMAIN}`);
 });
