@@ -6,100 +6,129 @@
   <title>Islomxon Jome Masjidi</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: linear-gradient(135deg, #43AB34, #1B5E20);
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1B5E20, #43AB34);
       color: white;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 20px;
-      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
       border-radius: 20px;
-      padding: 24px;
       max-width: 400px;
-      margin: 0 auto;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
     }
-    h1 { text-align: center; font-size: 26px; margin-bottom: 8px; font-weight: 700; }
-    .subtitle { text-align: center; font-size: 15px; opacity: 0.9; margin-bottom: 20px; }
-    .field { margin-bottom: 16px; }
-    label { display: block; font-size: 14px; margin-bottom: 6px; font-weight: 500; }
+    h2 {
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+    .time-card {
+      display: flex;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.15);
+      padding: 10px 15px;
+      border-radius: 12px;
+      margin: 8px 0;
+      align-items: center;
+      transition: transform 0.2s ease;
+    }
+    .time-card:hover {
+      transform: scale(1.03);
+      background: rgba(255,255,255,0.25);
+    }
     input, textarea {
-      width: 100%; padding: 12px 14px; border: none; border-radius: 12px;
-      background: rgba(255, 255, 255, 0.2); color: white; font-size: 16px;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 16px;
     }
-    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.7); }
-    textarea { height: 90px; resize: none; }
-    .btn {
-      width: 100%; padding: 14px; background: #FFFFFF; color: #1B5E20;
-      border: none; border-radius: 14px; font-size: 17px; font-weight: 600;
-      margin-top: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: 0.2s;
+    input:focus, textarea:focus {
+      outline: 2px solid #ffffffaa;
+      background: rgba(255,255,255,0.25);
     }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
-    .preview {
-      background: rgba(0,0,0,0.2); border-radius: 12px; padding: 14px;
-      margin-top: 16px; font-size: 14px; line-height: 1.5; display: none; white-space: pre-line;
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 12px;
+      background: white;
+      color: #1B5E20;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
     }
-    .preview.show { display: block; }
+    button:hover {
+      background: #f0f0f0;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Islomxon Jome Masjidi</h1>
-    <p class="subtitle">Bugungi namoz vaqtlarini kiriting</p>
+  <div class="container">
+    <h2>🕌 Islomxon Jome Masjidi</h2>
+    <p>Namoz vaqtlarini kiriting</p>
 
-    <div class="field"><label>Sana</label><input type="date" id="date"></div>
-    <div class="field"><label>Bomdod</label><input type="time" id="bomdod"></div>
-    <div class="field"><label>Peshin</label><input type="time" id="peshin"></div>
-    <div class="field"><label>Asr</label><input type="time" id="asr"></div>
-    <div class="field"><label>Shom</label><input type="time" id="shom"></div>
-    <div class="field"><label>Hufton</label><input type="time" id="hufton"></div>
-    <div class="field"><label>Izoh</label><textarea id="izoh">⏳Намозни адо этганингиздан сўнг, Аллоҳни турган, ўтирган ва ёнбошлаган ҳолингизда эсланг...</textarea></div>
-
-    <button class="btn" onclick="showPreview()">Ko‘rish</button>
-    <div id="preview" class="preview"></div>
-    <button class="btn" id="sendBtn" onclick="sendData()" style="display:none; background:#4CAF50; color:white;">YUBORISH</button>
+    <div class="time-card">
+      <span>Bomdod:</span>
+      <input type="time" id="bomdod">
+    </div>
+    <div class="time-card">
+      <span>Peshin:</span>
+      <input type="time" id="peshin">
+    </div>
+    <div class="time-card">
+      <span>Asr:</span>
+      <input type="time" id="asr">
+    </div>
+    <div class="time-card">
+      <span>Shom:</span>
+      <input type="time" id="shom">
+    </div>
+    <div class="time-card">
+      <span>Hufton:</span>
+      <input type="time" id="hufton">
+    </div>
+    
+    <textarea id="izoh" placeholder="Izoh...">Namozni ado etganingizdan so'ng, Allohni eslang. (Niso 103)</textarea>
+    
+    <button onclick="sendData()">YUBORISH</button>
   </div>
 
   <script>
-    document.getElementById('date').value = new Date().toISOString().split('T')[0];
-
-    function showPreview() {
-      const d = {
-        date: document.getElementById('date').value,
-        bomdod: document.getElementById('bomdod').value,
-        peshin: document.getElementById('peshin').value,
-        asr: document.getElementById('asr').value,
-        shom: document.getElementById('shom').value,
-        hufton: document.getElementById('hufton').value,
-        izoh: document.getElementById('izoh').value.trim()
-      };
-      if (!d.date || !d.bomdod || !d.peshin || !d.asr || !d.shom || !d.hufton) {
-        alert('Barcha vaqtlar to‘ldirilsin!');
-        return;
-      }
-      const text = `Islomxon jome masjidi\n\nSana: ${d.date}\nBomdod: ${d.bomdod}\nPeshin: ${d.peshin}\nAsr: ${d.asr}\nShom: ${d.shom}\nHufton: ${d.hufton}\n\nIzoh: ${d.izoh}`;
-      const preview = document.getElementById('preview');
-      preview.innerText = text;
-      preview.classList.add('show');
-      document.getElementById('sendBtn').style.display = 'block';
-    }
+    // Hozirgi sanani o'rnatish
+    const today = new Date().toISOString().split('T')[0];
 
     function sendData() {
       const data = {
-        date: document.getElementById('date').value,
+        date: today,
         bomdod: document.getElementById('bomdod').value,
         peshin: document.getElementById('peshin').value,
         asr: document.getElementById('asr').value,
         shom: document.getElementById('shom').value,
         hufton: document.getElementById('hufton').value,
-        izoh: document.getElementById('izoh').value.trim()
+        izoh: document.getElementById('izoh').value
       };
+
+      if (!data.bomdod || !data.peshin || !data.asr || !data.shom || !data.hufton) {
+        alert('Barcha vaqtlarni to‘ldiring!');
+        return;
+      }
+
       Telegram.WebApp.sendData(JSON.stringify(data));
+      Telegram.WebApp.close();
     }
   </script>
 </body>
