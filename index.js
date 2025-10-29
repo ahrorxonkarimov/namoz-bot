@@ -19,45 +19,45 @@ bot.command('start', (ctx) => {
 
   ctx.reply('Namoz vaqtlarini yuborish:', {
     reply_markup: {
-      inline_keyboard: [[
-        { text: 'Web App', web_app: { url: `${DOMAIN}/webapp.html` } }
-      ]]
+      inline_keyboard: [[{ text: 'Web App', web_app: { url: `${DOMAIN}/webapp.html` } }]]
     }
   });
 });
 
-bot.command('id', (ctx) => {
-  ctx.reply(`ID: ${ctx.from.id}`);
-});
+bot.command('id', (ctx) => ctx.reply(`ID: ${ctx.from.id}`));
 
 bot.on('web_app_data', async (ctx) => {
   if (ctx.from.id !== ADMIN_ID) return;
-
   const data = JSON.parse(ctx.webAppData.data);
-  const text = `Islomxon jome masjidi
+  const text = `🕌 *Islomxon Jome Masjidi* 🕌
 
-Sana: ${data.date}
-Bomdod: ${data.bomdod}
-Peshin: ${data.peshin}
-Asr: ${data.asr}
-Shom: ${data.shom}
-Hufton: ${data.hufton}
+📅 *Sana:* ${data.date}
+
+🌅 *Bomdod:* \`${data.bomdod}\`
+☀️ *Peshin:* \`${data.peshin}\`
+🌇 *Asr:* \`${data.asr}\`
+🌆 *Shom:* \`${data.shom}\`
+🌙 *Hufton:* \`${data.hufton}\`
 
 ${data.izoh}
+
+📍 Hududingiz uchun to‘g‘ri vaqtlarda namoz o‘qing!
+🤲 Allah qabul qilsin!
 
 https://t.me/Islomxon_masjidi`;
 
   try {
-    await bot.telegram.sendMessage(CHANNEL, text);
-    ctx.reply('Post yuborildi!');
+    await bot.telegram.sendMessage(CHANNEL, text, { parse_mode: 'MarkdownV2' });
+    await ctx.reply('✅ *Post kanalga yuborildi!*', {
+      parse_mode: 'Markdown',
+      reply_markup: { inline_keyboard: [[{ text: 'Kanalga o‘tish', url: 'https://t.me/Islomxon_masjidi' }]] }
+    });
   } catch (e) {
-    ctx.reply('Xato: ' + e.message);
+    ctx.reply('❌ Xato: ' + e.message);
   }
 });
 
 bot.telegram.setWebhook(`${DOMAIN}/webhook`);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log('Ishlayapti');
-});
+app.listen(PORT, () => console.log('Ishlayapti'));
