@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Islomxon Jome Masjidi</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --card: #F8F9FA;
+      --primary: #1B5E20;
+      --accent: #43AB34;
+      --gold: #FFD700;
+      --text: #2D2D2D;
+      --border: #E0E0E0;
+      --shadow: rgba(0,0,0,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 16px;
+      line-height: 1.6;
+      transition: all 0.3s;
+    }
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: 0 20px 50px var(--shadow);
+      border: 1px solid var(--border);
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .header h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .header p {
+      font-size: 16px;
+      color: #666;
+      margin-top: 12px;
+    }
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+    label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--primary);
+      transition: color 0.3s;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 15px 18px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      color: var(--text);
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(67,171,52,0.15);
+      transform: translateY(-1px);
+    }
+    input::placeholder, textarea::placeholder {
+      color: #AAA;
+    }
+    textarea {
+      resize: none;
+      height: 110px;
+      font-family: inherit;
+    }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 16px;
+      box-shadow: 0 6px 18px rgba(27,94,32,0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+    .btn:hover::before { left: 100%; }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(27,94,32,0.4);
+    }
+    .btn:active { transform: translateY(-1px); }
+    .btn.send {
+      background: var(--gold);
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .preview {
+      background: #F0F8F0;
+      border: 2px dashed var(--accent);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 24px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text);
+      display: none;
+      animation: slideUp 0.5s ease-out;
+      white-space: pre-line;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .preview.show { display: block; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 14px;
+      color: #888;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .loading.show { display: block; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🕌 Islomxon Jome Masjidi</h1>
+      <p>Namoz vaqtlarini professional tarzda yuboring</p>
+    </div>
+
+    <div class="form-group">
+      <label>📅 Bugungi sana</label>
+      <input type="date" id="date">
+    </div>
+
+    <div class="form-group">
+      <label>🌅 Bomdod</label>
+      <input type="time" id="bomdod">
+    </div>
+
+    <div class="form-group">
+      <label>☀️ Peshin</label>
+      <input type="time" id="peshin">
+    </div>
+
+    <div class="form-group">
+      <label>🌇 Asr</label>
+      <input type="time" id="asr">
+    </div>
+
+    <div class="form-group">
+      <label>🌆 Shom</label>
+      <input type="time" id="shom">
+    </div>
+
+    <div class="form-group">
+      <label>🌙 Hufton</label>
+      <input type="time" id="hufton">
+    </div>
+
+    <div class="form-group">
+      <label>📜 Izoh (ixtiyoriy)</label>
+      <textarea id="izoh">Namozni ado etganingizdan so‘ng, Allohni turgan, o‘tirgan va yonboshlagan holingizda eslang. (Niso surasi 103-oyat)</textarea>
+    </div>
+
+    <button class="btn" onclick="showPreview()">
+       Ko‘rish va Tasdiqlash
+    </button>
+
+    <div class="loading" id="loading">Yuborilmoqda...</div>
+
+    <div id="preview" class="preview"></div>
+
+    <button class="btn send" id="sendBtn" onclick="sendData()" style="display:none;">
+       YUBORISH
+    </button>
+
+    <div class="footer">
+      🤲 Har bir namoz – Allohga yaqinlashtiradi!
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    // Bugungi sanani avto qo'yish
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+    function showPreview() {
+      const data = getFormData();
+      if (!validate(data)) return;
+
+      const text = `🕌 *Islomxon Jome Masjidi* 🕌
+
+📅 *Sana:* ${data.date}
+
+🌅 *Bomdod:* \`${data.bomdod}\`
+☀️ *Peshin:* \`${data.peshin}\`
+🌇 *Asr:* \`${data.asr}\`
+🌆 *Shom:* \`${data.shom}\`
+🌙 *Hufton:* \`${data.hufton}\`
+
+${data.izoh}
+
+📍 Hududingiz uchun to‘g‘ri vaqtlarda namoz o‘qing!
+🤲 Allah qabul qilsin!
+
+https://t.me/Islomxon_masjidi`;
+
+      document.getElementById('preview').textContent = text;
+      document.getElementById('preview').classList.add('show');
+      document.getElementById('sendBtn').style.display = 'flex';
+      document.querySelector('.btn:not(.send)').style.display = 'none';
+    }
+
+    function getFormData() {
+      return {
+        date: document.getElementById('date').value,
+        bomdod: document.getElementById('bomdod').value,
+        peshin: document.getElementById('peshin').value,
+        asr: document.getElementById('asr').value,
+        shom: document.getElementById('shom').value,
+        hufton: document.getElementById('hufton').value,
+        izoh: document.getElementById('izoh').value.trim()
+      };
+    }
+
+    function validate(data) {
+      const required = ['date', 'bomdod', 'peshin', 'asr', 'shom', 'hufton'];
+      for (let field of required) {
+        if (!data[field]) {
+          tg.showAlert('⚠️ Barcha namoz vaqtlarini kiriting!');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function sendData() {
+      document.getElementById('loading').classList.add('show');
+      document.getElementById('sendBtn').disabled = true;
+
+      const data = getFormData();
+      tg.sendData(JSON.stringify(data));
+      setTimeout(() => tg.close(), 800);
+    }
+  </script>
+</body>
+</html>
